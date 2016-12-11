@@ -15,7 +15,7 @@
         {
             return new string[]
             {
-                "decimal", "string"
+                "decimal", "string", "program"
             };
         }
     }

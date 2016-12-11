@@ -5,6 +5,7 @@
         InvalidOperator = 1,
         MinusIsBroken,
         QuaterIsBroken,
-        IdentifierIsNotDefined
+        IdentifierIsNotDefined,
+        UseBeforeDeclaration
     }
 }

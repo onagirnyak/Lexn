@@ -41,6 +41,19 @@ namespace Lexn.Semantics
                                 String.Format("Invalid data type: {0}", nextLexem.Name));
                         }
                     }
+
+                    if (lexem.Type == LexemType.Identifier)
+                    {
+                        var nextLexem = lexicalResult.Lexems[i + 1];
+                        if (nextLexem.Type != LexemType.Colon)
+                        {
+                            if (lexem.Identifier == null || !dataTypes.Contains(lexem.Identifier.Type))
+                            {
+                                semanticsResult.AddError(AnalyzeErrorCode.UseBeforeDeclaration, lexem.Line,
+                                    String.Format("Unpossible use {0} identifier before declaration.", lexem.Name));
+                            }
+                        }
+                    }
                 }
             }
            

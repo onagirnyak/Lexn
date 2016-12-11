@@ -156,7 +156,7 @@ namespace Lexn.UI
         private string BuildInitialProgram()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("program MyProgram");
+            builder.AppendLine("MyProgram : program");
             builder.AppendLine("begin");
             builder.AppendLine("\twriteln \"Hello world\"");
             builder.AppendLine("end");
