@@ -20,6 +20,16 @@ namespace Lexn.Lexis.Model
             get { return _lexems.ToArray(); }
         }
 
+        public Identifier[] Identifiers
+        {
+            get { return _identifiers.ToArray(); }
+        }
+
+        public Constant[] Constants
+        {
+            get { return _constants.ToArray(); }
+        }
+
         public LexicalAnalyzeResult(ClassTable classTable)
         {
             _classTable = classTable;
@@ -65,13 +75,32 @@ namespace Lexn.Lexis.Model
                     foundIdentifier.Type = name;
                 }
             }
+            Constant constant = null;
+            if (processedType == LexemType.Const)
+            {
+                var foundConstant = _constants.FirstOrDefault(item => item.Value == name);
+                if (foundConstant != null)
+                {
+                    constant = foundConstant;
+                }
+                else
+                {
+                    constant = new Constant
+                    {
+                        ConstantID = Guid.NewGuid(),
+                        Value = name
+                    };
+                    _constants.Add(constant);
+                }
+            }
             _lexems.Add(new Lexem
             {
                 LexemID = Guid.NewGuid(),
                 Line = line,
                 Name = name,
                 Type = processedType,
-                Identifier = identifier
+                Identifier = identifier,
+                Constant = constant
             });
         }
     }

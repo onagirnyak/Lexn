@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lexn.Common", "Lexn.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lexn.UI", "Lexn.UI\Lexn.UI.csproj", "{06593DDD-E26E-455E-9F07-2288F843F341}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lexn.Semantics", "Lexn.Semantics\Lexn.Semantics.csproj", "{0824C5C9-F8AC-4909-B693-D691B6BEFF3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{06593DDD-E26E-455E-9F07-2288F843F341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06593DDD-E26E-455E-9F07-2288F843F341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06593DDD-E26E-455E-9F07-2288F843F341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0824C5C9-F8AC-4909-B693-D691B6BEFF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0824C5C9-F8AC-4909-B693-D691B6BEFF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0824C5C9-F8AC-4909-B693-D691B6BEFF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0824C5C9-F8AC-4909-B693-D691B6BEFF3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -131,7 +131,7 @@ namespace Lexn.Lexis
                             }
                             else
                             {
-                                analyzeResult.AddError(AnalyzeErrorCode.MinusIsBroker, line, 
+                                analyzeResult.AddError(AnalyzeErrorCode.MinusIsBroken, line, 
                                     String.Format("After dot need digit.", lexemName));
                                 code = AnalyzeCode.Error;
                             }

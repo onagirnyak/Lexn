@@ -3,7 +3,8 @@
     public enum AnalyzeErrorCode
     {
         InvalidOperator = 1,
-        MinusIsBroker,
-        QuaterIsBroken
+        MinusIsBroken,
+        QuaterIsBroken,
+        IdentifierIsNotDefined
     }
 }

@@ -65,6 +65,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AnalyzeErrorViewModel.cs" />
+    <Compile Include="ViewModel\ConstantViewModel.cs" />
+    <Compile Include="ViewModel\IdentifierViewModel.cs" />
     <Compile Include="ViewModel\LexemViewModel.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -103,6 +105,10 @@
     <ProjectReference Include="..\Lexn.Lexis\Lexn.Lexis.csproj">
       <Project>{5e410f34-5787-4344-87e1-769d10f76b6d}</Project>
       <Name>Lexn.Lexis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lexn.Semantics\Lexn.Semantics.csproj">
+      <Project>{0824c5c9-f8ac-4909-b693-d691b6beff3a}</Project>
+      <Name>Lexn.Semantics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

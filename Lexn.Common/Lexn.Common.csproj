@@ -43,8 +43,11 @@
     <Compile Include="AnalyzeErrorCode.cs" />
     <Compile Include="AnalyzeErrorResult.cs" />
     <Compile Include="AnalyzeResult.cs" />
+    <Compile Include="CommonFactory.cs" />
     <Compile Include="IAnalyzer.cs" />
     <Compile Include="IChecker.cs" />
+    <Compile Include="IKeyWordsProvider.cs" />
+    <Compile Include="InMemoryKeyWordsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

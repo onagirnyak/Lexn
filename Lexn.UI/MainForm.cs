@@ -9,24 +9,34 @@ using FastColoredTextBoxNS;
 using Lexn.Common;
 using Lexn.Lexis;
 using Lexn.Lexis.Model;
+using Lexn.Semantics;
 using Lexn.UI.ViewModel;
 
 namespace Lexn.UI
 {
     public partial class LexnForm : Form
     {
-        private readonly IAnalyzer _lexisAnalyzer;
+        private readonly IAnalyzer _lexicalAnalyzer;
+        private readonly IAnalyzer _semanticalAnalyzer;
         private readonly IKeyWordsProvider _keyWordsProvider;
         private readonly Style _blueStyle;
 
-        private List<LexemViewModel> _lexemViewModels;
-        private List<AnalyzeErrorViewModel> _errorViewModels;
+        private readonly List<LexemViewModel> _lexemViewModels;
+        private readonly List<IdentifierViewModel> _identifierViewModels;
+        private readonly List<ConstantViewModel> _constantViewModels;
+        private readonly List<AnalyzeErrorViewModel> _errorViewModels;
+
 
         public LexnForm()
         {
             InitializeComponent();
-            _lexisAnalyzer = LexisFactory.CreateLexicalAnalyzer();
-            _keyWordsProvider = LexisFactory.CreateKeyWordsProvider();
+            _lexicalAnalyzer = LexisFactory.CreateLexicalAnalyzer();
+            _semanticalAnalyzer = SemanticsFactory.CreateSemanticsAnalyzer();
+            _keyWordsProvider = CommonFactory.CreateKeyWordsProvider();
+            _lexemViewModels = new List<LexemViewModel>();
+            _identifierViewModels = new List<IdentifierViewModel>();
+            _constantViewModels = new List<ConstantViewModel>();
+            _errorViewModels = new List<AnalyzeErrorViewModel>();
             _blueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
         }
 
@@ -41,12 +51,13 @@ namespace Lexn.UI
 
         private void btnLexicalAnalyze_Click(object sender, EventArgs e)
         {
-            var analyzeResult = _lexisAnalyzer.Analyze(txtCode.Text) as LexicalAnalyzeResult;
-            if (analyzeResult != null)
+            ClearLists();
+            var lexicalAnalyzeResult = _lexicalAnalyzer.Analyze(txtCode.Text) as LexicalAnalyzeResult;
+            if (lexicalAnalyzeResult != null)
             {
-                if (analyzeResult.IsValid)
+                if (lexicalAnalyzeResult.IsValid)
                 {
-                    _lexemViewModels = analyzeResult.Lexems.Select(item => new LexemViewModel
+                    var lexemViewModels = lexicalAnalyzeResult.Lexems.Select(item => new LexemViewModel
                     {
                         LexemID = item.LexemID,
                         Line = item.Line,
@@ -55,19 +66,50 @@ namespace Lexn.UI
                             : String.Empty),
                         Type = item.Type.ToString()
                     }).ToList();
-                    btnViewLexems.Visible = true;
-                    btnViewErrors.Visible = false;
+                    _lexemViewModels.AddRange(lexemViewModels);
+
+                    var identifiersViewModels = lexicalAnalyzeResult.Identifiers.Select(item => new IdentifierViewModel
+                    {
+                        IdentifierID = item.IdentifierID,
+                        Name = item.Name,
+                        Type = item.Type
+                    });
+                    _identifierViewModels.AddRange(identifiersViewModels);
+
+                    var constantViewModels = lexicalAnalyzeResult.Constants.Select(item => new ConstantViewModel
+                    {
+                        ConstantID = item.ConstantID,
+                        Value = item.Value
+                    });
+                    _constantViewModels.AddRange(constantViewModels);
+                    HideErrors();
                 }
                 else
                 {
-                    _errorViewModels = analyzeResult.Errors.Select(item => new AnalyzeErrorViewModel
+                    var lexicalErrorViewModel = lexicalAnalyzeResult.Errors.Select(item => new AnalyzeErrorViewModel
                     {
                         Code = item.Code.ToString(),
                         Line = item.Line,
                         Message = item.Message
                     }).ToList();
-                    btnViewLexems.Visible = false;
-                    btnViewErrors.Visible = true;
+                    _errorViewModels.AddRange(lexicalErrorViewModel);
+                    ShowErrors();
+                }
+                var semanticalAnalyzeResult = _semanticalAnalyzer.Analyze(lexicalAnalyzeResult) as SemanticalAnalyzeResult;
+                if (semanticalAnalyzeResult != null)
+                {
+                    if (!semanticalAnalyzeResult.IsValid)
+                    {
+                        var semanticalErrorViewModels = semanticalAnalyzeResult.Errors
+                            .Select(item => new AnalyzeErrorViewModel
+                        {
+                            Code = item.Code.ToString(),
+                            Line = item.Line,
+                            Message = item.Message
+                        }).ToList();
+                        _errorViewModels.AddRange(semanticalErrorViewModels);
+                        ShowErrors();
+                    }
                 }
             }
 
@@ -82,12 +124,16 @@ namespace Lexn.UI
 
         private void btnViewIdentifiers_Click(object sender, EventArgs e)
         {
-
+            var form = new PopupForm();
+            form.Show(this);
+            form.InitIdentifiersGrid(_identifierViewModels);
         }
 
         private void btnViewConstants_Click(object sender, EventArgs e)
         {
-
+            var form = new PopupForm();
+            form.Show(this);
+            form.InitConstantGrid(_constantViewModels);
         }
 
         private void btnViewErrors_Click(object sender, EventArgs e)
@@ -104,6 +150,7 @@ namespace Lexn.UI
             {
                 e.ChangedRange.SetStyle(_blueStyle, keyWord, RegexOptions.Singleline);
             }
+            HideAllButtons();
         }
 
         private string BuildInitialProgram()
@@ -114,6 +161,40 @@ namespace Lexn.UI
             builder.AppendLine("\twriteln \"Hello world\"");
             builder.AppendLine("end");
             return builder.ToString();
+        }
+
+        private void ClearLists()
+        {
+            _lexemViewModels.Clear();
+            _errorViewModels.Clear();
+            _identifierViewModels.Clear();
+            _constantViewModels.Clear();
+        }
+
+        private void HideAllButtons()
+        {
+            btnViewLexems.Visible = false;
+            btnViewLexems.Visible = false;
+            btnViewIdentifiers.Visible = false;
+            btnViewConstants.Visible = false;
+            btnViewErrors.Visible = false;
+        }
+
+        private void ShowErrors()
+        {
+            btnViewLexems.Visible = false;
+            btnViewLexems.Visible = false;
+            btnViewIdentifiers.Visible = false;
+            btnViewConstants.Visible = false;
+            btnViewErrors.Visible = true;
+        }
+
+        private void HideErrors()
+        {
+            btnViewLexems.Visible = true;
+            btnViewIdentifiers.Visible = true;
+            btnViewConstants.Visible = true;
+            btnViewErrors.Visible = false;
         }
     }
 }

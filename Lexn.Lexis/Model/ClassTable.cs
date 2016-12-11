@@ -1,4 +1,6 @@
-﻿namespace Lexn.Lexis.Model
+﻿using Lexn.Common;
+
+namespace Lexn.Lexis.Model
 {
     public class ClassTable
     {
