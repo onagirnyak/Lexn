@@ -10,5 +10,13 @@
                 "then", "else"
             };
         }
+
+        public string[] GetSystemDataTypes()
+        {
+            return new string[]
+            {
+                "decimal", "string"
+            };
+        }
     }
 }

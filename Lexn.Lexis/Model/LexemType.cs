@@ -3,6 +3,7 @@
     public enum LexemType
     {
         Keyword,
+        SystemDataType,
         Identifier,
         Operator,
         Const,

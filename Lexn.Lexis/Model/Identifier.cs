@@ -8,6 +8,6 @@ namespace Lexn.Lexis.Model
 
         public string Name { get; set; }
 
-        public IdentifierType Type { get; set; }
+        public string Type { get; set; }
     }
 }

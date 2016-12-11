@@ -50,7 +50,9 @@ namespace Lexn.UI
                     {
                         LexemID = item.LexemID,
                         Line = item.Line,
-                        Name = item.Name,
+                        Name = item.Name + (item.Identifier != null && item.Identifier.Type != null
+                            ? "(" + item.Identifier.Type + ")"
+                            : String.Empty),
                         Type = item.Type.ToString()
                     }).ToList();
                     btnViewLexems.Visible = true;

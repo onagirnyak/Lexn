@@ -14,10 +14,12 @@
         public char WhiteSpace { get; private set; }
 
         public string[] KeyWords;
+        public string[] SystemDataTypes;
 
         public ClassTable(IKeyWordsProvider keyWordsProvider)
         {
             KeyWords = keyWordsProvider.GetKeyWords();
+            SystemDataTypes = keyWordsProvider.GetSystemDataTypes();
             Digits = "0123456789".ToCharArray();
             Letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
             Operators = ",+*/><=".ToCharArray();
