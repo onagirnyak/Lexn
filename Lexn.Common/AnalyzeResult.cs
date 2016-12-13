@@ -23,6 +23,11 @@ namespace Lexn.Common
             get { return _errors; }
         }
 
+        public void ClearErrors()
+        {
+            _errors.Clear();
+        }
+
         public void AddError(AnalyzeErrorCode code, int line, string message)
         {
             _errors.Add(new AnalyzeErrorResult

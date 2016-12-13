@@ -106,9 +106,9 @@
       <Project>{5e410f34-5787-4344-87e1-769d10f76b6d}</Project>
       <Name>Lexn.Lexis</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lexn.Semantics\Lexn.Semantics.csproj">
-      <Project>{0824c5c9-f8ac-4909-b693-d691b6beff3a}</Project>
-      <Name>Lexn.Semantics</Name>
+    <ProjectReference Include="..\Lexn.Syntax\Lexn.Syntax.csproj">
+      <Project>{d4bae40b-53a3-4f8b-9f6a-76c498358f62}</Project>
+      <Name>Lexn.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

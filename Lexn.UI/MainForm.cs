@@ -9,7 +9,8 @@ using FastColoredTextBoxNS;
 using Lexn.Common;
 using Lexn.Lexis;
 using Lexn.Lexis.Model;
-using Lexn.Semantics;
+using Lexn.Syntax;
+using Lexn.Syntax.Model;
 using Lexn.UI.ViewModel;
 
 namespace Lexn.UI
@@ -17,7 +18,7 @@ namespace Lexn.UI
     public partial class LexnForm : Form
     {
         private readonly IAnalyzer _lexicalAnalyzer;
-        private readonly IAnalyzer _semanticalAnalyzer;
+        private readonly IAnalyzer _syntaxAnalyzer;
         private readonly IKeyWordsProvider _keyWordsProvider;
         private readonly Style _blueStyle;
 
@@ -31,7 +32,7 @@ namespace Lexn.UI
         {
             InitializeComponent();
             _lexicalAnalyzer = LexisFactory.CreateLexicalAnalyzer();
-            _semanticalAnalyzer = SemanticsFactory.CreateSemanticsAnalyzer();
+            _syntaxAnalyzer = SyntaxFactory.CreateSyntaxAnalyzer();
             _keyWordsProvider = CommonFactory.CreateKeyWordsProvider();
             _lexemViewModels = new List<LexemViewModel>();
             _identifierViewModels = new List<IdentifierViewModel>();
@@ -95,7 +96,7 @@ namespace Lexn.UI
                     _errorViewModels.AddRange(lexicalErrorViewModel);
                     ShowErrors();
                 }
-                var semanticalAnalyzeResult = _semanticalAnalyzer.Analyze(lexicalAnalyzeResult) as SemanticalAnalyzeResult;
+                var semanticalAnalyzeResult = _syntaxAnalyzer.Analyze(lexicalAnalyzeResult.Lexems) as SyntaxisAnalyzeResult;
                 if (semanticalAnalyzeResult != null)
                 {
                     if (!semanticalAnalyzeResult.IsValid)
@@ -156,7 +157,7 @@ namespace Lexn.UI
         private string BuildInitialProgram()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("MyProgram : program");
+            builder.AppendLine("program MyProgram");
             builder.AppendLine("begin");
             builder.AppendLine("\twriteln \"Hello world\"");
             builder.AppendLine("end");

@@ -6,6 +6,12 @@
         MinusIsBroken,
         QuaterIsBroken,
         IdentifierIsNotDefined,
-        UseBeforeDeclaration
+        InvalidDataType,
+        NeedToUseConstant,
+        ProgramIsRequired,
+        VarIsRequired,
+        MissedColon,
+        MissedComa,
+
     }
 }
