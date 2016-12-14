@@ -11,7 +11,15 @@
         ProgramIsRequired,
         VarIsRequired,
         MissedColon,
+        MissedAssignment,
         MissedComa,
+        MissedTo,
+        MissedDo,
+        MissedPlus,
+        MissedBraces,
+        MissedBegin,
+        MissedEnd,
+        UnknownOperation
 
     }
 }

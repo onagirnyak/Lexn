@@ -22,7 +22,7 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            var nextLexem = analyzeResult.Lexems.Dequeue();
+            var nextLexem = analyzeResult.Lexems.Dequeue(true);
 
             if (nextLexem.Name != "program")
             {
@@ -36,7 +36,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
 
-            nextLexem = analyzeResult.Lexems.Dequeue();
+            nextLexem = analyzeResult.Lexems.Dequeue(true);
             if (nextLexem.Name != "var")
             {
                 analyzeResult.AddError(AnalyzeErrorCode.VarIsRequired, nextLexem.Line, "Keyword 'var' is required.");
@@ -49,7 +49,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
 
-            nextLexem = analyzeResult.Lexems.Dequeue();
+            nextLexem = analyzeResult.Lexems.Dequeue(true);
             if (nextLexem.Type != LexemType.Colon)
             {
                 analyzeResult.AddError(AnalyzeErrorCode.MissedColon, nextLexem.Line, String.Format("Colon is missed."));
@@ -63,10 +63,10 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
 
-            nextLexem = analyzeResult.Lexems.Dequeue();
+            nextLexem = analyzeResult.Lexems.Dequeue(true);
             if (nextLexem.Name != "begin")
             {
-                analyzeResult.AddError(AnalyzeErrorCode.VarIsRequired, nextLexem.Line, "Miss 'begin'.");
+                analyzeResult.AddError(AnalyzeErrorCode.MissedBegin, nextLexem.Line, "Miss 'begin'.");
                 return;
             }
 
@@ -76,10 +76,10 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
             
-            nextLexem = analyzeResult.Lexems.Dequeue();
+            nextLexem = analyzeResult.Lexems.Dequeue(true);
             if (nextLexem.Name != "end")
             {
-                analyzeResult.AddError(AnalyzeErrorCode.VarIsRequired, nextLexem.Line, "Miss 'end'.");
+                analyzeResult.AddError(AnalyzeErrorCode.MissedEnd, nextLexem.Line, "Miss 'end'.");
                 return;
             }
         }

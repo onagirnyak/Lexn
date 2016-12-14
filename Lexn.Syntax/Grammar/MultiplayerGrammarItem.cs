@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Lexn.Common;
+using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -7,30 +9,40 @@ namespace Lexn.Syntax.Grammar
     {
         private readonly IGrammarItem _identifierGrammarItem;
         private readonly IGrammarItem _constantGrammarItem;
-        private readonly IGrammarItem _statementGrammarItem;
 
         public MultiplayerGrammarItem(IGrammarItem identifierGrammarItem,
-            IGrammarItem constantGrammarItem,
-            IGrammarItem statementGrammarItem)
+            IGrammarItem constantGrammarItem)
         {
             _identifierGrammarItem = identifierGrammarItem;
             _constantGrammarItem = constantGrammarItem;
-            _statementGrammarItem = statementGrammarItem;
         }
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            _identifierGrammarItem.Parse(analyzeResult);
-            var isIdentifierValid = analyzeResult.IsValid;
-            _constantGrammarItem.Parse(analyzeResult);
-            var isConstantValid  = analyzeResult.IsValid;
-            _statementGrammarItem.Parse(analyzeResult);
-            var isStatementValid = analyzeResult.IsValid;
-
-            if (isIdentifierValid && isConstantValid && isStatementValid)
+            var nextLexem = analyzeResult.Lexems.Peek();
+            if (nextLexem.Type == LexemType.Identifier)
             {
-                analyzeResult.Lexems.Dequeue();
-                analyzeResult.ClearErrors();
+                _identifierGrammarItem.Parse(analyzeResult);
+            }
+            else if (nextLexem.Type == LexemType.Const)
+            {
+                _constantGrammarItem.Parse(analyzeResult);
+            }
+            else if (nextLexem.Name == "(")
+            {
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                var statement = new StatementGrammarItem(new AdditionalGrammarItem(this));
+                statement.Parse(analyzeResult);
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Name != ")")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedBraces, nextLexem.Line, "Missed ')'.");
+                }
+            }
+            else
+            {
+                analyzeResult.AddError(AnalyzeErrorCode.UnknownOperation, nextLexem.Line, "Unknown operation.");
+                return;
             }
         }
     }

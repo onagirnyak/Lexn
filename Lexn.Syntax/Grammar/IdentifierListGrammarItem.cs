@@ -26,7 +26,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
             nextLexem = analyzeResult.Lexems.Peek();
-            if (nextLexem.Type == LexemType.Colon)
+            if (nextLexem.Type == LexemType.Colon || nextLexem.Type == LexemType.OperationSeparator)
             {
                 return;
             }

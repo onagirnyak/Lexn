@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lexn.Common;
 using Lexn.Lexis.Model;
+using Lexn.Syntax.Grammar;
 
 namespace Lexn.Syntax.Model
 {
@@ -10,6 +11,8 @@ namespace Lexn.Syntax.Model
         {
             Lexems = lexems;
         }
+
+        public GrammarItemType Type { get; set; }
 
         public Queue<Lexem> Lexems { get; set; }
     }

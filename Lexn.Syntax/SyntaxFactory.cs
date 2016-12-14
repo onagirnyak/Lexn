@@ -10,10 +10,13 @@ namespace Lexn.Syntax
         {
             var identifier = new IdentifierGrammarItem();
             var constant = new ConstantGrammarItem();
-            var statement = new StatementGrammarItem();
+            var multiplayer = new MultiplayerGrammarItem(identifier, constant);
+            var additional = new AdditionalGrammarItem(multiplayer);
+            var statement = new StatementGrammarItem(additional);
             var identifierList= new IdentifierListGrammarItem(identifier);
-            var operatorList = new OperatorListGrammarItem();
-            var multiplayer = new MultiplayerGrammarItem(identifier, constant, statement);
+            var operation = new OperationGrammarItem(identifierList, identifierList, statement);
+            var operatorList = new OperationListGrammarItem(operation);
+            
             switch (type)
             {
                 case GrammarItemType.Root:
@@ -30,12 +33,6 @@ namespace Lexn.Syntax
                     return constant;
                 case GrammarItemType.Identifier:
                     return identifier;
-                case GrammarItemType.Integer:
-                    return new IntegerGrammarItem();
-                case GrammarItemType.UnsignedInteger:
-                    return new UnsignedIntegerGrammarItem();
-                case GrammarItemType.Digit:
-                    return new DigitGrammarItem();
                 default:
                     throw new NotImplementedException("Provided grammar item is not implemented yet.");
             }

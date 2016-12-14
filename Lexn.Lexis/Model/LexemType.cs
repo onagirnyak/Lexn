@@ -4,12 +4,15 @@
     {
         Keyword,
         SystemDataType,
+        BeginScope,
+        EndScope,
         Identifier,
         Operator,
         Const,
         Colon,
         Dot,
-        Equal,
-        Minus
+        Assigment,
+        Minus,
+        OperationSeparator
     }
 }

@@ -45,18 +45,15 @@
     <Compile Include="Grammar\GrammarItemType.cs" />
     <Compile Include="Grammar\IdentifierGrammarItem.cs" />
     <Compile Include="Grammar\IGrammarItem.cs" />
-    <Compile Include="Grammar\IntegerGrammarItem.cs" />
-    <Compile Include="Grammar\LetterGrammarItem.cs" />
     <Compile Include="Grammar\MultiplayerGrammarItem.cs" />
-    <Compile Include="Grammar\OperatorGrammarItem.cs" />
-    <Compile Include="Grammar\OperatorListGrammarItem.cs" />
+    <Compile Include="Grammar\OperationGrammarItem.cs" />
+    <Compile Include="Grammar\OperationListGrammarItem.cs" />
     <Compile Include="Grammar\ProgramGrammarItem.cs" />
-    <Compile Include="Grammar\DigitGrammarItem.cs" />
     <Compile Include="Grammar\StatementGrammarItem.cs" />
     <Compile Include="Grammar\IdentifierListGrammarItem.cs" />
-    <Compile Include="Grammar\UnsignedIntegerGrammarItem.cs" />
     <Compile Include="Model\SyntaxisAnalyzeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueExtensions.cs" />
     <Compile Include="SyntaxFactory.cs" />
     <Compile Include="SyntaxisAnalyzer.cs" />
   </ItemGroup>

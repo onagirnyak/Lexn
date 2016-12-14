@@ -59,6 +59,10 @@ namespace Lexn.Lexis
                                 state = 7;
                             else if (_classTable.Quater == character)
                                 state = 8;
+                            else if (_classTable.OperationSeparator == character)
+                            {
+                                analyzeResult.AddLexem(line, lexemName, LexemType.OperationSeparator);
+                            }
                             else if (_classTable.Operators.Contains(character))
                             {
                                 analyzeResult.AddLexem(line, lexemName, LexemType.Operator);
@@ -66,7 +70,7 @@ namespace Lexn.Lexis
                             }
                             else
                             {
-                                if (character == _classTable.WhiteSpace || character == '\r')
+                                if (character == _classTable.WhiteSpace || character == _classTable.OperationSeparator)
                                 {
                                     code = AnalyzeCode.End;
                                 }
@@ -139,13 +143,13 @@ namespace Lexn.Lexis
                         case 7:
                             if (_classTable.Equal == character)
                             {
-                                analyzeResult.AddLexem(line, lexemName, LexemType.Equal);
+                                analyzeResult.AddLexem(line, lexemName, LexemType.Assigment);
                                 code = AnalyzeCode.Accept;
                             }
                             else
                             {
-                                analyzeResult.AddLexem(line, lexemName.Substring(0, lexemName.Length - 1), LexemType.Colon);
                                 i--;
+                                analyzeResult.AddLexem(line, lexemName.Substring(0, lexemName.Length - 1), LexemType.Colon);
                                 code = AnalyzeCode.Accept;
                             }
                             break;

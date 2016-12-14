@@ -157,9 +157,10 @@ namespace Lexn.UI
         private string BuildInitialProgram()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("program MyProgram");
+            builder.AppendLine("program MyProgram var counter:decimal");
             builder.AppendLine("begin");
-            builder.AppendLine("\twriteln \"Hello world\"");
+            builder.AppendLine("\tcounter := 10");
+            builder.AppendLine("\twriteln counter");
             builder.AppendLine("end");
             return builder.ToString();
         }
