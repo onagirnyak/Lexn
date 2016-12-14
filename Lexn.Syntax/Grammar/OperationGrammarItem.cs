@@ -84,19 +84,17 @@ namespace Lexn.Syntax.Grammar
                     analyzeResult.AddError(AnalyzeErrorCode.MissedDo, nextLexem.Line, "Missed 'do' key word.");
                     return;
                 }
-                nextLexem = analyzeResult.Lexems.Dequeue();
+                nextLexem = analyzeResult.Lexems.Dequeue(true);
                 if (nextLexem.Name != "begin")
                 {
                     analyzeResult.AddError(AnalyzeErrorCode.MissedBegin, nextLexem.Line, "Missed 'begin' key word.");
                     return;
                 }
                 Parse(analyzeResult);
-                nextLexem = analyzeResult.Lexems.Dequeue();
-                if (nextLexem.Name != "end")
-                {
-                    analyzeResult.AddError(AnalyzeErrorCode.MissedEnd, nextLexem.Line, "Missed 'end' key word.");
-                    return;
-                }
+            }
+            else if (nextLexem.Name == "end")
+            {
+                return;
             }
             else
             {

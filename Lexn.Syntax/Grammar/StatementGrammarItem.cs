@@ -22,7 +22,7 @@ namespace Lexn.Syntax.Grammar
                     return;
                 }
                 var nextLexem = analyzeResult.Lexems.Peek();
-                if (nextLexem.Name != "+")
+                if (nextLexem.Name != "+" && nextLexem.Name != "<")
                 {
                     return;
                 }

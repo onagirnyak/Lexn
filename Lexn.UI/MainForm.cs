@@ -156,13 +156,19 @@ namespace Lexn.UI
 
         private string BuildInitialProgram()
         {
-            var builder = new StringBuilder();
-            builder.AppendLine("program MyProgram var counter:decimal");
-            builder.AppendLine("begin");
-            builder.AppendLine("\tcounter := 10");
-            builder.AppendLine("\twriteln counter");
-            builder.AppendLine("end");
-            return builder.ToString();
+            return @"program MyProgram var i,j:decimal
+begin
+    for i := 5 to i < 10 do
+    begin
+        for j := 5 to j < 10 do
+        begin
+        
+        end
+    end
+    i := (10 * 10 * 50) + 10 + 15
+    writeln j
+end
+";
         }
 
         private void ClearLists()

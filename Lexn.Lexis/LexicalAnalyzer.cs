@@ -76,7 +76,7 @@ namespace Lexn.Lexis
                                 }
                                 else
                                 {
-                                    analyzeResult.AddError(AnalyzeErrorCode.InvalidOperator, line, 
+                                    analyzeResult.AddError(AnalyzeErrorCode.UnknownOperator, line, 
                                         String.Format("Character {0} is not valid.", lexemName));
                                     code = AnalyzeCode.Error;
                                 }
@@ -135,7 +135,7 @@ namespace Lexn.Lexis
                             }
                             else
                             {
-                                analyzeResult.AddError(AnalyzeErrorCode.MinusIsBroken, line, 
+                                analyzeResult.AddError(AnalyzeErrorCode.BrokenMinus, line, 
                                     String.Format("After dot need digit.", lexemName));
                                 code = AnalyzeCode.Error;
                             }
@@ -167,7 +167,7 @@ namespace Lexn.Lexis
                             }
                             else
                             {
-                                analyzeResult.AddError(AnalyzeErrorCode.QuaterIsBroken, line, 
+                                analyzeResult.AddError(AnalyzeErrorCode.BrokenQuater, line, 
                                     "Closed quater is not exists.");
                                 code = AnalyzeCode.Error;
                             }

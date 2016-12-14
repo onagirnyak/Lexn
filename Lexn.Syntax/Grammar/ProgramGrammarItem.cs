@@ -26,7 +26,7 @@ namespace Lexn.Syntax.Grammar
 
             if (nextLexem.Name != "program")
             {
-                analyzeResult.AddError(AnalyzeErrorCode.ProgramIsRequired, nextLexem.Line, "Keyword 'program' is required.");
+                analyzeResult.AddError(AnalyzeErrorCode.MissedProgram, nextLexem.Line, "Keyword 'program' is required.");
                 return;
             }
 
@@ -39,7 +39,7 @@ namespace Lexn.Syntax.Grammar
             nextLexem = analyzeResult.Lexems.Dequeue(true);
             if (nextLexem.Name != "var")
             {
-                analyzeResult.AddError(AnalyzeErrorCode.VarIsRequired, nextLexem.Line, "Keyword 'var' is required.");
+                analyzeResult.AddError(AnalyzeErrorCode.MissedVar, nextLexem.Line, "Keyword 'var' is required.");
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace Lexn.Syntax.Grammar
             nextLexem = analyzeResult.Lexems.Dequeue();
             if (nextLexem.Type != LexemType.SystemDataType)
             {
-                analyzeResult.AddError(AnalyzeErrorCode.InvalidDataType, nextLexem.Line, String.Format("Invalid data type: {0}.", nextLexem.Name));
+                analyzeResult.AddError(AnalyzeErrorCode.UndefinedDataType, nextLexem.Line, String.Format("Invalid data type: {0}.", nextLexem.Name));
                 return;
             }
 

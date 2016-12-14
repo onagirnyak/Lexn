@@ -2,14 +2,14 @@
 {
     public enum AnalyzeErrorCode
     {
-        InvalidOperator = 1,
-        MinusIsBroken,
-        QuaterIsBroken,
-        IdentifierIsNotDefined,
-        InvalidDataType,
-        NeedToUseConstant,
-        ProgramIsRequired,
-        VarIsRequired,
+        UnknownOperator = 1,
+        BrokenMinus,
+        BrokenQuater,
+        UndefinedDataType,
+        BrokenConstant,
+        BrokenIdentifier,
+        MissedProgram,
+        MissedVar,
         MissedColon,
         MissedAssignment,
         MissedComa,
@@ -20,6 +20,5 @@
         MissedBegin,
         MissedEnd,
         UnknownOperation
-
     }
 }

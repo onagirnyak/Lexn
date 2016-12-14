@@ -14,7 +14,7 @@ namespace Lexn.Syntax
             var additional = new AdditionalGrammarItem(multiplayer);
             var statement = new StatementGrammarItem(additional);
             var identifierList= new IdentifierListGrammarItem(identifier);
-            var operation = new OperationGrammarItem(identifierList, identifierList, statement);
+            var operation = new OperationGrammarItem(identifierList, identifier, statement);
             var operatorList = new OperationListGrammarItem(operation);
             
             switch (type)
