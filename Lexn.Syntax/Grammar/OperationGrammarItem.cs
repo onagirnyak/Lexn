@@ -27,6 +27,7 @@ namespace Lexn.Syntax.Grammar
             var isWrite = nextLexem.Name == "writeln";
             var isIdentifier = nextLexem.Type == LexemType.Identifier;
             var isFor = nextLexem.Name == "for";
+            var isIf = nextLexem.Name == "if";
             if (isRead || isWrite)
             {
                 _identifierListGrammarItem.Parse(analyzeResult);
@@ -48,6 +49,47 @@ namespace Lexn.Syntax.Grammar
                 {
                     return;
                 }
+            }
+            else if (isIf)
+            {
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Type != LexemType.Identifier && nextLexem.Type != LexemType.Const)
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedIdentifier, nextLexem.Line, "Missed identifier or constant.");
+                    return;
+                }
+
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Name != "=")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedEqual, nextLexem.Line, "Missed equal.");
+                    return;
+                }
+
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Type != LexemType.Identifier && nextLexem.Type != LexemType.Const)
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedIdentifier, nextLexem.Line, "Missed identifier or constant.");
+                    return;
+                }
+
+                nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Name != "then")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedThen, nextLexem.Line, "Missed then.");
+                    return;
+                }
+
+                Parse(analyzeResult);
+
+                nextLexem = analyzeResult.Lexems.Dequeue(true);
+                if (nextLexem.Name != "else")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedElse, nextLexem.Line, "Missed else.");
+                    return;
+                }
+                Parse(analyzeResult);
+
             }
             else if (isFor)
             {
@@ -82,12 +124,6 @@ namespace Lexn.Syntax.Grammar
                 if (nextLexem.Name != "do")
                 {
                     analyzeResult.AddError(AnalyzeErrorCode.MissedDo, nextLexem.Line, "Missed 'do' key word.");
-                    return;
-                }
-                nextLexem = analyzeResult.Lexems.Dequeue(true);
-                if (nextLexem.Name != "begin")
-                {
-                    analyzeResult.AddError(AnalyzeErrorCode.MissedBegin, nextLexem.Line, "Missed 'begin' key word.");
                     return;
                 }
                 Parse(analyzeResult);

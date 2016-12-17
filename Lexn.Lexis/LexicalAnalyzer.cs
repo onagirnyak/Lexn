@@ -57,8 +57,6 @@ namespace Lexn.Lexis
                                 state = 6;
                             else if (_classTable.Colon == character)
                                 state = 7;
-                            else if (_classTable.Quater == character)
-                                state = 8;
                             else if (_classTable.OperationSeparator == character)
                             {
                                 analyzeResult.AddLexem(line, lexemName, LexemType.OperationSeparator);
@@ -96,7 +94,7 @@ namespace Lexn.Lexis
                             if (_classTable.Digits.Contains(character))
                                 state = 3;
                             else if (_classTable.Dot == character)
-                                state = 6;
+                                state = 4;
                             else
                             {
                                 i--;
@@ -105,7 +103,7 @@ namespace Lexn.Lexis
                             }
                             break;
                         case 4:
-                            if (_classTable.Digits.Contains(character))
+                            if (_classTable.Digits.Contains(character) || character == 'e' || character == _classTable.Minus)
                             {
                                 state = 4;
                             }
@@ -135,8 +133,8 @@ namespace Lexn.Lexis
                             }
                             else
                             {
-                                analyzeResult.AddError(AnalyzeErrorCode.BrokenMinus, line, 
-                                    String.Format("After dot need digit.", lexemName));
+                                analyzeResult.AddError(AnalyzeErrorCode.MissedDigit, line, 
+                                    String.Format("After dot need digit."));
                                 code = AnalyzeCode.Error;
                             }
                             break;
@@ -151,25 +149,6 @@ namespace Lexn.Lexis
                                 i--;
                                 analyzeResult.AddLexem(line, lexemName.Substring(0, lexemName.Length - 1), LexemType.Colon);
                                 code = AnalyzeCode.Accept;
-                            }
-                            break;
-                        case 8:
-                            if (_classTable.Quater == character)
-                            {
-                                analyzeResult.AddLexem(line, lexemName, LexemType.Const);
-                                code = AnalyzeCode.Accept;
-                            }
-                            else if (_classTable.Letters.Contains(character) 
-                                || _classTable.Digits.Contains(character) 
-                                || _classTable.WhiteSpace == character)
-                            {
-                                state = 8;
-                            }
-                            else
-                            {
-                                analyzeResult.AddError(AnalyzeErrorCode.BrokenQuater, line, 
-                                    "Closed quater is not exists.");
-                                code = AnalyzeCode.Error;
                             }
                             break;
                     }

@@ -12,8 +12,6 @@ namespace Lexn.Syntax.Model
             Lexems = lexems;
         }
 
-        public GrammarItemType Type { get; set; }
-
         public Queue<Lexem> Lexems { get; set; }
     }
 }

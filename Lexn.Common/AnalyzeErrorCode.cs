@@ -4,10 +4,10 @@
     {
         UnknownOperator = 1,
         BrokenMinus,
-        BrokenQuater,
         UndefinedDataType,
-        BrokenConstant,
-        BrokenIdentifier,
+        MissedConstant,
+        MissedIdentifier,
+        MissedDigit,
         MissedProgram,
         MissedVar,
         MissedColon,
@@ -19,6 +19,9 @@
         MissedBraces,
         MissedBegin,
         MissedEnd,
+        MissedEqual,
+        MissedThen,
+        MissedElse,
         UnknownOperation
     }
 }

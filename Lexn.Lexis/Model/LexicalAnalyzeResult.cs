@@ -69,8 +69,8 @@ namespace Lexn.Lexis.Model
             }
             if (processedType == LexemType.SystemDataType)
             {
-                var foundIdentifier = _identifiers.LastOrDefault();
-                if (foundIdentifier != null)
+                var foundIdentifiers = _identifiers.Where(item => item.Type == null);
+                foreach (var foundIdentifier in foundIdentifiers)
                 {
                     foundIdentifier.Type = name;
                 }

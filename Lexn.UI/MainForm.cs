@@ -30,7 +30,6 @@ namespace Lexn.UI
 
         public LexnForm()
         {
-            InitializeComponent();
             _lexicalAnalyzer = LexisFactory.CreateLexicalAnalyzer();
             _syntaxAnalyzer = SyntaxFactory.CreateSyntaxAnalyzer();
             _keyWordsProvider = CommonFactory.CreateKeyWordsProvider();
@@ -39,6 +38,7 @@ namespace Lexn.UI
             _constantViewModels = new List<ConstantViewModel>();
             _errorViewModels = new List<AnalyzeErrorViewModel>();
             _blueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
+            InitializeComponent();
         }
 
         private void LexnForm_Load(object sender, EventArgs e)
@@ -84,6 +84,23 @@ namespace Lexn.UI
                     });
                     _constantViewModels.AddRange(constantViewModels);
                     HideErrors();
+
+                    var semanticalAnalyzeResult = _syntaxAnalyzer.Analyze(lexicalAnalyzeResult.Lexems) as SyntaxisAnalyzeResult;
+                    if (semanticalAnalyzeResult != null)
+                    {
+                        if (!semanticalAnalyzeResult.IsValid)
+                        {
+                            var semanticalErrorViewModels = semanticalAnalyzeResult.Errors
+                                .Select(item => new AnalyzeErrorViewModel
+                                {
+                                    Code = item.Code.ToString(),
+                                    Line = item.Line,
+                                    Message = item.Message
+                                }).ToList();
+                            _errorViewModels.AddRange(semanticalErrorViewModels);
+                            ShowErrors();
+                        }
+                    }
                 }
                 else
                 {
@@ -95,22 +112,6 @@ namespace Lexn.UI
                     }).ToList();
                     _errorViewModels.AddRange(lexicalErrorViewModel);
                     ShowErrors();
-                }
-                var semanticalAnalyzeResult = _syntaxAnalyzer.Analyze(lexicalAnalyzeResult.Lexems) as SyntaxisAnalyzeResult;
-                if (semanticalAnalyzeResult != null)
-                {
-                    if (!semanticalAnalyzeResult.IsValid)
-                    {
-                        var semanticalErrorViewModels = semanticalAnalyzeResult.Errors
-                            .Select(item => new AnalyzeErrorViewModel
-                        {
-                            Code = item.Code.ToString(),
-                            Line = item.Line,
-                            Message = item.Message
-                        }).ToList();
-                        _errorViewModels.AddRange(semanticalErrorViewModels);
-                        ShowErrors();
-                    }
                 }
             }
 
@@ -158,11 +159,13 @@ namespace Lexn.UI
         {
             return @"program MyProgram var i,j:decimal
 begin
-    for i := 5 to i < 10 do
-    begin
-        for j := 5 to j < 10 do
-        begin
-        
+    for i := 5 to 10 do
+        for j := 5 to 10 do
+            if j = 5 then
+                j := j + 1.15e-17
+            else 
+                i := i + 2
+            end
         end
     end
     i := (10 * 10 * 50) + 10 + 15

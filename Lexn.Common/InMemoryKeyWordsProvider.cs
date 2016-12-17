@@ -6,7 +6,7 @@
         {
             return new string[]
             {
-                "program", "var", "decimal", "string", "begin", "for", "to", "do", "begin", "end", "writeln", "readln", "if",
+                "program", "var", "decimal", "int", "begin", "for", "to", "do", "begin", "end", "writeln", "readln", "if",
                 "then", "else"
             };
         }
@@ -15,7 +15,7 @@
         {
             return new string[]
             {
-                "decimal", "string"
+                "decimal", "int"
             };
         }
     }

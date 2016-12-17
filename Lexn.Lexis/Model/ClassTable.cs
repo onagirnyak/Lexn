@@ -12,7 +12,6 @@ namespace Lexn.Lexis.Model
         public char Minus { get; private set; }
         public char Equal { get; private set; }
         public char Colon { get; private set; }
-        public char Quater { get; private set; }
         public char WhiteSpace { get; private set; }
         public char OperationSeparator { get; private set; }
 
@@ -25,12 +24,11 @@ namespace Lexn.Lexis.Model
             SystemDataTypes = keyWordsProvider.GetSystemDataTypes();
             Digits = "0123456789".ToCharArray();
             Letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-            Operators = ",+*/><=()".ToCharArray();
+            Operators = ",+*/()=".ToCharArray();
             Dot = '.';
             Minus = '-';
             Equal = '=';
             Colon = ':';
-            Quater = '"';
             WhiteSpace = ' ';
             OperationSeparator = '\r';
         }

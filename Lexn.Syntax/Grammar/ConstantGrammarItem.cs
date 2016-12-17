@@ -13,7 +13,7 @@ namespace Lexn.Syntax.Grammar
             var firstLexem = analyzeResult.Lexems.Dequeue();
 
             if (firstLexem.Type != LexemType.Const)
-                analyzeResult.AddError(AnalyzeErrorCode.BrokenConstant,
+                analyzeResult.AddError(AnalyzeErrorCode.MissedConstant,
                     firstLexem.Line, String.Format("Invalid token {0}", firstLexem.Name));
         }
     }
