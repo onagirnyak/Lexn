@@ -16,17 +16,16 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            while (analyzeResult.Lexems.Any())
+            _operatorGrammarItem.Parse(analyzeResult);
+            if (!analyzeResult.IsValid)
+            {
+                return;
+            }
+            while (analyzeResult.Lexems.Dequeue().Type == LexemType.OperationSeparator)
             {
                 _operatorGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
                 {
-                    return;
-                }
-                var nextLexem = analyzeResult.Lexems.Dequeue();
-                if (nextLexem.Type != LexemType.OperationSeparator)
-                {
-                    analyzeResult.AddError(AnalyzeErrorCode.MissedDelimiter, nextLexem.Line, "Missed operation delimiter.");
                     return;
                 }
             }

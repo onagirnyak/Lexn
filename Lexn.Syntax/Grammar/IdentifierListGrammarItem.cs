@@ -16,17 +16,16 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            while (analyzeResult.Lexems.Any())
+            _identifierGrammarItem.Parse(analyzeResult);
+            if (!analyzeResult.IsValid)
+            {
+                return;
+            }
+            while (analyzeResult.Lexems.Dequeue().Name == ",")
             {
                 _identifierGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
                 {
-                    return;
-                }
-                var nextLexem = analyzeResult.Lexems.Dequeue();
-                if (nextLexem.Name != ",")
-                {
-                    analyzeResult.AddError(AnalyzeErrorCode.MissedComa, nextLexem.Line, "Coma between operators is missed.");
                     return;
                 }
             }
