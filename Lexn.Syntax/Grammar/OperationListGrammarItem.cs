@@ -1,4 +1,6 @@
-﻿using Lexn.Lexis.Model;
+﻿using System.Linq;
+using Lexn.Common;
+using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -14,11 +16,17 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            while (analyzeResult.Lexems.Peek(true).Name != "end")
+            while (analyzeResult.Lexems.Any())
             {
                 _operatorGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
                 {
+                    return;
+                }
+                var nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Type != LexemType.OperationSeparator)
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedDelimiter, nextLexem.Line, "Missed operation delimiter.");
                     return;
                 }
             }

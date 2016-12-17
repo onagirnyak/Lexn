@@ -98,7 +98,7 @@ namespace Lexn.UI
                                     Message = item.Message
                                 }).ToList();
                             _errorViewModels.AddRange(semanticalErrorViewModels);
-                            ShowErrors();
+                            //ShowErrors();
                         }
                     }
                 }

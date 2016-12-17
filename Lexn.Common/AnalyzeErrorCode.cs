@@ -16,12 +16,14 @@
         MissedTo,
         MissedDo,
         MissedPlus,
+        MissedMultiplier,
         MissedBraces,
         MissedBegin,
         MissedEnd,
         MissedEqual,
         MissedThen,
         MissedElse,
+        MissedDelimiter,
         UnknownOperation
     }
 }

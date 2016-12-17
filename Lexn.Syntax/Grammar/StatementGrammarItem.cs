@@ -1,4 +1,6 @@
-﻿using Lexn.Lexis.Model;
+﻿using System.Linq;
+using Lexn.Common;
+using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -14,7 +16,7 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            while (true)
+            while (analyzeResult.Lexems.Any())
             {
                 _additionalGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
@@ -22,11 +24,11 @@ namespace Lexn.Syntax.Grammar
                     return;
                 }
                 var nextLexem = analyzeResult.Lexems.Peek();
-                if (nextLexem.Name != "+" && nextLexem.Name != "<")
+                if (nextLexem.Name != "+" && nextLexem.Name != "-")
                 {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedPlus, nextLexem.Line, "Missed plus or minus.");
                     return;
                 }
-                nextLexem = analyzeResult.Lexems.Dequeue();
             }
         }
     }

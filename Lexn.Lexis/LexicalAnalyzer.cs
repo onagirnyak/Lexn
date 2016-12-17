@@ -95,6 +95,8 @@ namespace Lexn.Lexis
                                 state = 3;
                             else if (_classTable.Dot == character)
                                 state = 4;
+                            else if (character == 'e')
+                                state = 8;
                             else
                             {
                                 i--;
@@ -103,9 +105,13 @@ namespace Lexn.Lexis
                             }
                             break;
                         case 4:
-                            if (_classTable.Digits.Contains(character) || character == 'e' || character == _classTable.Minus)
+                            if (_classTable.Digits.Contains(character))
                             {
                                 state = 4;
+                            }
+                            else if (character == 'e')
+                            {
+                                state = 8;
                             }
                             else
                             {
@@ -149,6 +155,32 @@ namespace Lexn.Lexis
                                 i--;
                                 analyzeResult.AddLexem(line, lexemName.Substring(0, lexemName.Length - 1), LexemType.Colon);
                                 code = AnalyzeCode.Accept;
+                            }
+                            break;
+                        case 8:
+                            if (_classTable.Digits.Contains(character))
+                            {
+                                state = 3;
+                            }
+                            else if (_classTable.Minus == character)
+                            {
+                                state = 9;
+                            }
+                            else
+                            {
+                                code = AnalyzeCode.Error;
+                            }
+                            break;
+                        case 9:
+                            if (_classTable.Digits.Contains(character))
+                            {
+                                state = 4;
+                            }
+                            else
+                            {
+                                analyzeResult.AddError(AnalyzeErrorCode.MissedDigit, line,
+                                   String.Format("After minus need digit."));
+                                code = AnalyzeCode.Error;
                             }
                             break;
                     }

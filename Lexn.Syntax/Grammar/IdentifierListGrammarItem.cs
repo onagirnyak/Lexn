@@ -1,4 +1,5 @@
-﻿using Lexn.Common;
+﻿using System.Linq;
+using Lexn.Common;
 using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
@@ -15,28 +16,20 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
-            var nextLexem = analyzeResult.Lexems.Peek();
-            if (nextLexem.Type == LexemType.Colon)
+            while (analyzeResult.Lexems.Any())
             {
-                return;
+                _identifierGrammarItem.Parse(analyzeResult);
+                if (!analyzeResult.IsValid)
+                {
+                    return;
+                }
+                var nextLexem = analyzeResult.Lexems.Dequeue();
+                if (nextLexem.Name != ",")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedComa, nextLexem.Line, "Coma between operators is missed.");
+                    return;
+                }
             }
-            _identifierGrammarItem.Parse(analyzeResult);
-            if (!analyzeResult.IsValid)
-            {
-                return;
-            }
-            nextLexem = analyzeResult.Lexems.Peek();
-            if (nextLexem.Type == LexemType.Colon || nextLexem.Type == LexemType.OperationSeparator)
-            {
-                return;
-            }
-            nextLexem = analyzeResult.Lexems.Dequeue();
-            if (nextLexem.Name != ",")
-            {
-                analyzeResult.AddError(AnalyzeErrorCode.MissedComa, nextLexem.Line, "Coma between operators is missed.");
-                return;
-            }
-            Parse(analyzeResult);
         }
     }
 }

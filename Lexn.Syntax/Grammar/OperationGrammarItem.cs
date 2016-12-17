@@ -1,5 +1,4 @@
-﻿using System;
-using Lexn.Common;
+﻿using Lexn.Common;
 using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
