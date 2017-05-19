@@ -1,11 +1,9 @@
-﻿namespace Lexn.Lexis.Model
+﻿namespace Lexn.Common.Model
 {
     public enum LexemType
     {
         Keyword,
         SystemDataType,
-        BeginScope,
-        EndScope,
         Identifier,
         Operator,
         Const,

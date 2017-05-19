@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Lexn.Common;
-using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -21,8 +20,9 @@ namespace Lexn.Syntax.Grammar
             {
                 return;
             }
-            while (analyzeResult.Lexems.Dequeue().Name == ",")
+            while (analyzeResult.Lexems.Peek().Name == ",")
             {
+                analyzeResult.Lexems.Dequeue();
                 _identifierGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
                 {

@@ -1,4 +1,5 @@
 ﻿using Lexn.Common;
+using Lexn.Common.Interfaces;
 
 namespace Lexn.Lexis.Model
 {

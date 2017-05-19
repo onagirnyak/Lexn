@@ -6,7 +6,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
+using Lexn.CodeExecutor;
+using Lexn.CodeExecutor.Interfaces;
 using Lexn.Common;
+using Lexn.Common.Interfaces;
 using Lexn.Lexis;
 using Lexn.Lexis.Model;
 using Lexn.Syntax;
@@ -20,12 +23,17 @@ namespace Lexn.UI
         private readonly IAnalyzer _lexicalAnalyzer;
         private readonly IAnalyzer _syntaxAnalyzer;
         private readonly IKeyWordsProvider _keyWordsProvider;
+        private readonly IPostfixNotationBuilder _postfixNotationBuilder;
+        private readonly IPostfixNotationExecutor _postfixNotationExecutor;
         private readonly Style _blueStyle;
 
         private readonly List<LexemViewModel> _lexemViewModels;
         private readonly List<IdentifierViewModel> _identifierViewModels;
         private readonly List<ConstantViewModel> _constantViewModels;
         private readonly List<AnalyzeErrorViewModel> _errorViewModels;
+        private readonly List<ReversePolishViewModel> _reversePolishViewModels;
+
+        private readonly List<string> _output;
 
 
         public LexnForm()
@@ -33,10 +41,16 @@ namespace Lexn.UI
             _lexicalAnalyzer = LexisFactory.CreateLexicalAnalyzer();
             _syntaxAnalyzer = SyntaxFactory.CreateSyntaxAnalyzer();
             _keyWordsProvider = CommonFactory.CreateKeyWordsProvider();
+
+            _postfixNotationBuilder = CodeExecutorFactory.CreatePostfixNotationBuilder();
+            _postfixNotationExecutor = CodeExecutorFactory.CreateIPostfixNotationExecutor();
+
             _lexemViewModels = new List<LexemViewModel>();
             _identifierViewModels = new List<IdentifierViewModel>();
             _constantViewModels = new List<ConstantViewModel>();
             _errorViewModels = new List<AnalyzeErrorViewModel>();
+            _reversePolishViewModels = new List<ReversePolishViewModel>();
+            _output = new List<string>();
             _blueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
             InitializeComponent();
         }
@@ -85,20 +99,42 @@ namespace Lexn.UI
                     _constantViewModels.AddRange(constantViewModels);
                     HideErrors();
 
-                    var semanticalAnalyzeResult = _syntaxAnalyzer.Analyze(lexicalAnalyzeResult.Lexems) as SyntaxisAnalyzeResult;
-                    if (semanticalAnalyzeResult != null)
+                    var syntaxisAnalyzeResult = _syntaxAnalyzer.Analyze(lexicalAnalyzeResult.Lexems) as SyntaxisAnalyzeResult;
+                    if (syntaxisAnalyzeResult != null)
                     {
-                        if (!semanticalAnalyzeResult.IsValid)
+                        if (syntaxisAnalyzeResult.IsValid)
                         {
-                            var semanticalErrorViewModels = semanticalAnalyzeResult.Errors
-                                .Select(item => new AnalyzeErrorViewModel
-                                {
-                                    Code = item.Code.ToString(),
-                                    Line = item.Line,
-                                    Message = item.Message
-                                }).ToList();
-                            _errorViewModels.AddRange(semanticalErrorViewModels);
-                            //ShowErrors();
+                            var list = lexicalAnalyzeResult.Lexems.ToList();
+                            var from = list.FindIndex(item => item.Name == "begin");
+                            list.RemoveRange(0, from + 1);
+
+                            var to = list.FindLastIndex(item => item.Name == "end");
+                            list.RemoveRange(to, list.Count - to);
+
+                            var lexems = _postfixNotationBuilder.Build(list);
+                            var reversePolishViewModels = lexems.Select(item => new ReversePolishViewModel
+                            {
+                                Value = item.Name
+                            }).ToList();
+                            _reversePolishViewModels.AddRange(reversePolishViewModels);
+
+                            var output = _postfixNotationExecutor.Execute(lexems, (name) =>
+                            {
+                                return "10";
+                            });
+                            _output.AddRange(output);
+                        }
+                        else
+                        {
+                            var syntaxisErrorViewModels = syntaxisAnalyzeResult.Errors
+                              .Select(item => new AnalyzeErrorViewModel
+                              {
+                                  Code = item.Code.ToString(),
+                                  Line = item.Line,
+                                  Message = item.Message
+                              }).ToList();
+                            _errorViewModels.AddRange(syntaxisErrorViewModels);
+                            btnViewErrors.Visible = true;
                         }
                     }
                 }
@@ -114,7 +150,6 @@ namespace Lexn.UI
                     ShowErrors();
                 }
             }
-
         }
 
         private void btnViewLexems_Click(object sender, EventArgs e)
@@ -144,7 +179,21 @@ namespace Lexn.UI
             form.Show(this);
             form.InitErrorGrid(_errorViewModels);
         }
- 
+
+        private void btnViewReversePolish_Click(object sender, EventArgs e)
+        {
+            var form = new PopupForm();
+            form.Show(this);
+            form.InitReversePolishGrid(_reversePolishViewModels);
+        }
+
+        private void btnViewOutput_Click(object sender, EventArgs e)
+        {
+            var form = new OutputForm();
+            form.Show(this);
+            form.InitOutputTextbox(_output);
+        }
+
         private void txtCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             e.ChangedRange.ClearStyle(_blueStyle);
@@ -180,6 +229,8 @@ end
             _errorViewModels.Clear();
             _identifierViewModels.Clear();
             _constantViewModels.Clear();
+            _reversePolishViewModels.Clear();
+            _output.Clear();
         }
 
         private void HideAllButtons()
@@ -189,6 +240,8 @@ end
             btnViewIdentifiers.Visible = false;
             btnViewConstants.Visible = false;
             btnViewErrors.Visible = false;
+            btnViewReversePolish.Visible = false;
+            btnViewOutput.Visible = false;
         }
 
         private void ShowErrors()
@@ -198,6 +251,8 @@ end
             btnViewIdentifiers.Visible = false;
             btnViewConstants.Visible = false;
             btnViewErrors.Visible = true;
+            btnViewReversePolish.Visible = false;
+            btnViewOutput.Visible = false;
         }
 
         private void HideErrors()
@@ -205,6 +260,8 @@ end
             btnViewLexems.Visible = true;
             btnViewIdentifiers.Visible = true;
             btnViewConstants.Visible = true;
+            btnViewReversePolish.Visible = true;
+            btnViewOutput.Visible = true;
             btnViewErrors.Visible = false;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Lexn.Common
+namespace Lexn.Common.Analyze
 {
     public abstract class AnalyzeResult
     {

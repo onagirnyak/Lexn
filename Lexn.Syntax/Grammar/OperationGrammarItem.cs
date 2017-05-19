@@ -1,5 +1,6 @@
 ﻿using Lexn.Common;
-using Lexn.Lexis.Model;
+using Lexn.Common.Analyze;
+using Lexn.Common.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -21,6 +22,7 @@ namespace Lexn.Syntax.Grammar
 
         public void Parse(SyntaxisAnalyzeResult analyzeResult)
         {
+            if(analyzeResult.Lexems.Peek().Name == "end") return;
             var nextLexem = analyzeResult.Lexems.Dequeue(true);
             var isRead = nextLexem.Name == "readln";
             var isWrite = nextLexem.Name == "writeln";
@@ -88,6 +90,12 @@ namespace Lexn.Syntax.Grammar
                     return;
                 }
                 Parse(analyzeResult);
+                nextLexem = analyzeResult.Lexems.Dequeue(true);
+                if (nextLexem.Name != "end")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedEnd, nextLexem.Line, "Missed end.");
+                    return;
+                }
 
             }
             else if (isFor)
@@ -126,15 +134,12 @@ namespace Lexn.Syntax.Grammar
                     return;
                 }
                 Parse(analyzeResult);
-            }
-            else if (nextLexem.Name == "end")
-            {
-                return;
-            }
-            else
-            {
-                analyzeResult.AddError(AnalyzeErrorCode.UnknownOperation, nextLexem.Line, "Unknown operation");
-                return;
+                nextLexem = analyzeResult.Lexems.Dequeue(true);
+                if (nextLexem.Name != "end")
+                {
+                    analyzeResult.AddError(AnalyzeErrorCode.MissedEnd, nextLexem.Line, "Missed end.");
+                    return;
+                }
             }
         }
     }

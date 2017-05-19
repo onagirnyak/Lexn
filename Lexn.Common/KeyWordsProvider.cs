@@ -1,12 +1,14 @@
-﻿namespace Lexn.Common
+﻿using Lexn.Common.Interfaces;
+
+namespace Lexn.Common
 {
-    internal class InMemoryKeyWordsProvider : IKeyWordsProvider
+    internal class KeyWordsProvider : IKeyWordsProvider
     {
         public string[] GetKeyWords()
         {
             return new string[]
             {
-                "program", "var", "decimal", "int", "begin", "for", "to", "do", "begin", "end", "writeln", "readln", "if",
+                "program", "var", "decimal", "begin", "for", "to", "do", "begin", "end", "writeln", "readln", "if",
                 "then", "else"
             };
         }
@@ -15,7 +17,7 @@
         {
             return new string[]
             {
-                "decimal", "int"
+                "decimal"
             };
         }
     }

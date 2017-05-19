@@ -1,12 +1,13 @@
 ﻿using System;
 using Lexn.Common;
+using Lexn.Common.Interfaces;
 using Lexn.Syntax.Grammar;
 
 namespace Lexn.Syntax
 {
     public static class SyntaxFactory
     {
-        public static IGrammarItem CreateGrammarItem(GrammarItemType type)
+        internal static IGrammarItem CreateGrammarItem(GrammarItemType type)
         {
             var identifier = new IdentifierGrammarItem();
             var constant = new ConstantGrammarItem();

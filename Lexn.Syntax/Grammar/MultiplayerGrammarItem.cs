@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Lexn.Common;
-using Lexn.Lexis.Model;
+using Lexn.Common.Analyze;
+using Lexn.Common.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar

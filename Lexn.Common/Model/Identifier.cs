@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lexn.Lexis.Model
+namespace Lexn.Common.Model
 {
     public class Identifier
     {
@@ -9,5 +9,7 @@ namespace Lexn.Lexis.Model
         public string Name { get; set; }
 
         public string Type { get; set; }
+
+        public string Value { get; set; }
     }
 }

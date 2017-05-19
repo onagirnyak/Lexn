@@ -43,10 +43,6 @@
     <Compile Include="LexisFactory.cs" />
     <Compile Include="Model\AnalyzeCode.cs" />
     <Compile Include="Model\ClassTable.cs" />
-    <Compile Include="Model\Constant.cs" />
-    <Compile Include="Model\Identifier.cs" />
-    <Compile Include="Model\Lexem.cs" />
-    <Compile Include="Model\LexemType.cs" />
     <Compile Include="LexicalAnalyzer.cs" />
     <Compile Include="Model\LexicalAnalyzeResult.cs" />
     <Compile Include="Model\Operator.cs" />

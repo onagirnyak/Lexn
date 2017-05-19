@@ -1,6 +1,6 @@
 ﻿namespace Lexn.UI
 {
-    partial class PopupForm
+    partial class OutputForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridLexems = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLexems)).BeginInit();
+            this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // gridLexems
+            // txtOutput
             // 
-            this.gridLexems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridLexems.Location = new System.Drawing.Point(16, 15);
-            this.gridLexems.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gridLexems.Name = "gridLexems";
-            this.gridLexems.Size = new System.Drawing.Size(772, 559);
-            this.gridLexems.TabIndex = 0;
+            this.txtOutput.Location = new System.Drawing.Point(13, 13);
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.ReadOnly = true;
+            this.txtOutput.Size = new System.Drawing.Size(424, 404);
+            this.txtOutput.TabIndex = 0;
+            this.txtOutput.Text = "";
             // 
-            // PopupForm
+            // OutputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 588);
-            this.Controls.Add(this.gridLexems);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "PopupForm";
-            this.Text = "PopupForm";
-            ((System.ComponentModel.ISupportInitialize)(this.gridLexems)).EndInit();
+            this.ClientSize = new System.Drawing.Size(449, 429);
+            this.Controls.Add(this.txtOutput);
+            this.Name = "OutputForm";
+            this.Text = "OutputForm";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView gridLexems;
+        private System.Windows.Forms.RichTextBox txtOutput;
     }
 }

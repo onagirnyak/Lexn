@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace Lexn.Lexis.Model
+namespace Lexn.Common.Model
 {
     public class Lexem
     {
         public Guid LexemID { get; set; }
 
         public int Line { get; set; }
+
+        public int Priority { get; set; }
 
         public string Name { get; set; }
 

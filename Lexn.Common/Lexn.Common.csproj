@@ -40,15 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyzeErrorCode.cs" />
-    <Compile Include="AnalyzeErrorResult.cs" />
-    <Compile Include="AnalyzeResult.cs" />
+    <Compile Include="Analyze\AnalyzeErrorCode.cs" />
+    <Compile Include="Analyze\AnalyzeErrorResult.cs" />
+    <Compile Include="Analyze\AnalyzeResult.cs" />
     <Compile Include="CommonFactory.cs" />
-    <Compile Include="IAnalyzer.cs" />
-    <Compile Include="IKeyWordsProvider.cs" />
-    <Compile Include="InMemoryKeyWordsProvider.cs" />
+    <Compile Include="Interfaces\IAnalyzer.cs" />
+    <Compile Include="Interfaces\IKeyWordsProvider.cs" />
+    <Compile Include="KeyWordsProvider.cs" />
+    <Compile Include="Model\Constant.cs" />
+    <Compile Include="Model\Identifier.cs" />
+    <Compile Include="Model\Lexem.cs" />
+    <Compile Include="Model\LexemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

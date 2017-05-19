@@ -1,10 +1,12 @@
-﻿namespace Lexn.Common
+﻿using Lexn.Common.Interfaces;
+
+namespace Lexn.Common
 {
     public class CommonFactory
     {
         public static IKeyWordsProvider CreateKeyWordsProvider()
         {
-            return new InMemoryKeyWordsProvider();
+            return new KeyWordsProvider();
         }
 
     }

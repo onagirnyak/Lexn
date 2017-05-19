@@ -1,4 +1,4 @@
-﻿namespace Lexn.Common
+﻿namespace Lexn.Common.Analyze
 {
     public enum AnalyzeErrorCode
     {

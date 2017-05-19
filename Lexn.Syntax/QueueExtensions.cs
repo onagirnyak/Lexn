@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lexn.Lexis.Model;
+using Lexn.Common.Model;
 
 namespace Lexn.Syntax
 { 
@@ -16,18 +16,6 @@ namespace Lexn.Syntax
                 }
             }
             return lexems.Dequeue();
-        }
-
-        public static Lexem Peek(this Queue<Lexem> lexems, bool igonoreSeparators)
-        {
-            if (igonoreSeparators)
-            {
-                while (lexems.Peek().Type == LexemType.OperationSeparator)
-                {
-                    lexems.Dequeue();
-                }
-            }
-            return lexems.Peek();
         }
     }
 }

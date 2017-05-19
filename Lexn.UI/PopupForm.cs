@@ -164,5 +164,26 @@ namespace Lexn.UI
             //Bind BindingList directly to the DataGrid, no need of BindingSource
             gridLexems.DataSource = filenamesList;
         }
+
+        public void InitReversePolishGrid(List<ReversePolishViewModel> reversePolishViewModels)
+        {
+            gridLexems.AutoGenerateColumns = false;
+
+            //create the column programatically
+            var cell = new DataGridViewTextBoxCell();
+            gridLexems.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                CellTemplate = cell,
+                Name = "Value",
+                HeaderText = "Value",
+                Width = 300,
+                DataPropertyName = "Value" // Tell the column which property of FileName it should use
+            });
+
+            var filenamesList = new BindingList<ReversePolishViewModel>(reversePolishViewModels); // <-- BindingList
+
+            //Bind BindingList directly to the DataGrid, no need of BindingSource
+            gridLexems.DataSource = filenamesList;
+        }
     }
 }

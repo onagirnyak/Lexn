@@ -1,6 +1,6 @@
 ﻿namespace Lexn.UI
 {
-    partial class PopupForm
+    partial class InputForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridLexems = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLexems)).BeginInit();
+            this.lblInput = new System.Windows.Forms.Label();
+            this.txtInput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // gridLexems
+            // lblInput
             // 
-            this.gridLexems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridLexems.Location = new System.Drawing.Point(16, 15);
-            this.gridLexems.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gridLexems.Name = "gridLexems";
-            this.gridLexems.Size = new System.Drawing.Size(772, 559);
-            this.gridLexems.TabIndex = 0;
+            this.lblInput.AutoSize = true;
+            this.lblInput.Location = new System.Drawing.Point(25, 63);
+            this.lblInput.Name = "lblInput";
+            this.lblInput.Size = new System.Drawing.Size(36, 16);
+            this.lblInput.TabIndex = 0;
+            this.lblInput.Text = "Input";
             // 
-            // PopupForm
+            // txtInput
+            // 
+            this.txtInput.Location = new System.Drawing.Point(76, 60);
+            this.txtInput.Name = "txtInput";
+            this.txtInput.Size = new System.Drawing.Size(100, 22);
+            this.txtInput.TabIndex = 1;
+            // 
+            // InputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 588);
-            this.Controls.Add(this.gridLexems);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "PopupForm";
-            this.Text = "PopupForm";
-            ((System.ComponentModel.ISupportInitialize)(this.gridLexems)).EndInit();
+            this.ClientSize = new System.Drawing.Size(227, 145);
+            this.Controls.Add(this.txtInput);
+            this.Controls.Add(this.lblInput);
+            this.Name = "InputForm";
+            this.Text = "InputForm";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView gridLexems;
+        private System.Windows.Forms.Label lblInput;
+        private System.Windows.Forms.TextBox txtInput;
     }
 }

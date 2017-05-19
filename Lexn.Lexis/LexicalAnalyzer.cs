@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Lexn.Common;
+using Lexn.Common.Analyze;
+using Lexn.Common.Interfaces;
+using Lexn.Common.Model;
 using Lexn.Lexis.Model;
 
 namespace Lexn.Lexis

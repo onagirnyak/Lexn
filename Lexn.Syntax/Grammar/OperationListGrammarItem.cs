@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Lexn.Common;
-using Lexn.Lexis.Model;
+using Lexn.Common.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -21,8 +21,9 @@ namespace Lexn.Syntax.Grammar
             {
                 return;
             }
-            while (analyzeResult.Lexems.Dequeue().Type == LexemType.OperationSeparator)
+            while (analyzeResult.Lexems.Peek().Type == LexemType.OperationSeparator)
             {
+                analyzeResult.Lexems.Dequeue();
                 _operatorGrammarItem.Parse(analyzeResult);
                 if (!analyzeResult.IsValid)
                 {

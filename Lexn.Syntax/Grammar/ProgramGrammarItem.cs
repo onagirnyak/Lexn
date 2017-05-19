@@ -1,6 +1,6 @@
 ﻿using System;
-using Lexn.Common;
-using Lexn.Lexis.Model;
+using Lexn.Common.Analyze;
+using Lexn.Common.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar
@@ -36,7 +36,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
 
-            nextLexem = analyzeResult.Lexems.Dequeue(true);
+            nextLexem = analyzeResult.Lexems.Dequeue();
             if (nextLexem.Name != "var")
             {
                 analyzeResult.AddError(AnalyzeErrorCode.MissedVar, nextLexem.Line, "Keyword 'var' is required.");
@@ -49,7 +49,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
 
-            nextLexem = analyzeResult.Lexems.Dequeue(true);
+            nextLexem = analyzeResult.Lexems.Dequeue();
             if (nextLexem.Type != LexemType.Colon)
             {
                 analyzeResult.AddError(AnalyzeErrorCode.MissedColon, nextLexem.Line, String.Format("Colon is missed."));
@@ -76,7 +76,7 @@ namespace Lexn.Syntax.Grammar
                 return;
             }
             
-            nextLexem = analyzeResult.Lexems.Dequeue(true);
+            nextLexem = analyzeResult.Lexems.Dequeue();
             if (nextLexem.Name != "end")
             {
                 analyzeResult.AddError(AnalyzeErrorCode.MissedEnd, nextLexem.Line, "Miss 'end'.");

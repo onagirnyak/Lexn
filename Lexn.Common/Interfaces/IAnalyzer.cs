@@ -1,4 +1,6 @@
-﻿namespace Lexn.Common
+﻿using Lexn.Common.Analyze;
+
+namespace Lexn.Common.Interfaces
 {
     public interface IAnalyzer
     {

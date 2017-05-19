@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4BAE40B-53A3-4F8B-9F6A-76C498358F62}</ProjectGuid>
+    <ProjectGuid>{E8F2934F-51A4-499F-B84F-0C62402B2CAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lexn.Syntax</RootNamespace>
-    <AssemblyName>Lexn.Syntax</AssemblyName>
+    <RootNamespace>Lexn.CodeExecutor</RootNamespace>
+    <AssemblyName>Lexn.CodeExecutor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,22 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Grammar\AdditionalGrammarItem.cs" />
-    <Compile Include="Grammar\ConstantGrammarItem.cs" />
-    <Compile Include="Grammar\GrammarItemType.cs" />
-    <Compile Include="Grammar\IdentifierGrammarItem.cs" />
-    <Compile Include="Grammar\IGrammarItem.cs" />
-    <Compile Include="Grammar\MultiplayerGrammarItem.cs" />
-    <Compile Include="Grammar\OperationGrammarItem.cs" />
-    <Compile Include="Grammar\OperationListGrammarItem.cs" />
-    <Compile Include="Grammar\ProgramGrammarItem.cs" />
-    <Compile Include="Grammar\StatementGrammarItem.cs" />
-    <Compile Include="Grammar\IdentifierListGrammarItem.cs" />
-    <Compile Include="Model\SyntaxisAnalyzeResult.cs" />
+    <Compile Include="CodeExecutorFactory.cs" />
+    <Compile Include="Interfaces\IPostfixNotationBuilder.cs" />
+    <Compile Include="Interfaces\IPostfixNotationExecutor.cs" />
+    <Compile Include="PostfixNotationBuilder.cs" />
+    <Compile Include="PostfixNotationExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueExtensions.cs" />
-    <Compile Include="SyntaxFactory.cs" />
-    <Compile Include="SyntaxisAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lexn.Common\Lexn.Common.csproj">

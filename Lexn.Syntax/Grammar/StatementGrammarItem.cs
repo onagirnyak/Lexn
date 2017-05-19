@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Lexn.Common;
-using Lexn.Lexis.Model;
 using Lexn.Syntax.Model;
 
 namespace Lexn.Syntax.Grammar

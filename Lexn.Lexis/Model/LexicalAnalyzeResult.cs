@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lexn.Common;
+using Lexn.Common.Analyze;
+using Lexn.Common.Model;
 
 namespace Lexn.Lexis.Model
 {
@@ -73,6 +74,7 @@ namespace Lexn.Lexis.Model
                 foreach (var foundIdentifier in foundIdentifiers)
                 {
                     foundIdentifier.Type = name;
+                    foundIdentifier.Value = GetIdentifierDefaultValue(name);
                 }
             }
             Constant constant = null;
@@ -98,10 +100,51 @@ namespace Lexn.Lexis.Model
                 LexemID = Guid.NewGuid(),
                 Line = line,
                 Name = name,
+                Priority = GetPriority(name),
                 Type = processedType,
                 Identifier = identifier,
                 Constant = constant
             });
+        }
+
+        private int GetPriority(string name)
+        {
+            switch (name)
+            {
+                case "(":
+                case "\r":
+                case "if":
+                case "then":
+                case "writeln":
+                    return 0;
+                case ")":
+                case "else":
+                case "end":
+                    return 1;
+                case ":=":
+                    return 2;
+                case "=":
+                    return 3;
+                case "+":
+                case "-":
+                    return 4;
+                case "*":
+                case "/":
+                    return 5;
+                default:
+                    return 6;
+            }
+        }
+
+        private string GetIdentifierDefaultValue(string type)
+        {
+            switch (type)
+            {
+                case "decimal":
+                    return "0";
+                default:
+                    return String.Empty;
+            }
         }
     }
 }

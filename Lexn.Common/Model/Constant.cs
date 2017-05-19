@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lexn.Lexis.Model
+namespace Lexn.Common.Model
 {
     public class Constant
     {
