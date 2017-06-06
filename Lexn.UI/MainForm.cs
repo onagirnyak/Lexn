@@ -104,25 +104,32 @@ namespace Lexn.UI
                     {
                         if (syntaxisAnalyzeResult.IsValid)
                         {
-                            var list = lexicalAnalyzeResult.Lexems.ToList();
-                            var from = list.FindIndex(item => item.Name == "begin");
-                            list.RemoveRange(0, from + 1);
-
-                            var to = list.FindLastIndex(item => item.Name == "end");
-                            list.RemoveRange(to, list.Count - to);
-
-                            var lexems = _postfixNotationBuilder.Build(list);
-                            var reversePolishViewModels = lexems.Select(item => new ReversePolishViewModel
+                            try
                             {
-                                Value = item.Name
-                            }).ToList();
-                            _reversePolishViewModels.AddRange(reversePolishViewModels);
+                                var list = lexicalAnalyzeResult.Lexems.ToList();
+                                var from = list.FindIndex(item => item.Name == "begin");
+                                list.RemoveRange(0, from + 1);
 
-                            var output = _postfixNotationExecutor.Execute(lexems, (name) =>
+                                var to = list.FindLastIndex(item => item.Name == "end");
+                                list.RemoveRange(to, list.Count - to);
+
+                                var lexems = _postfixNotationBuilder.Build(list);
+                                var reversePolishViewModels = lexems.Select(item => new ReversePolishViewModel
+                                {
+                                    Value = item.Name
+                                }).ToList();
+                                _reversePolishViewModels.AddRange(reversePolishViewModels);
+
+                                var output = _postfixNotationExecutor.Execute(lexems, (name) =>
+                                {
+                                    return "10";
+                                });
+                                _output.AddRange(output);
+                            }
+                            catch (Exception exc)
                             {
-                                return "10";
-                            });
-                            _output.AddRange(output);
+                                //TODO: need write logger
+                            }
                         }
                         else
                         {
@@ -208,17 +215,15 @@ namespace Lexn.UI
         {
             return @"program MyProgram var i,j:decimal
 begin
-    for i := 5 to 10 do
-        for j := 5 to 10 do
-            if j = 5 then
-                j := j + 1.15e-17
-            else 
-                i := i + 2
-            end
-        end
+    j := 3
+    if j = 5 then
+        j := j + 15.15
+    else 
+        i := i + 2
     end
     i := (10 * 10 * 50) + 10 + 15
     writeln j
+    writeln i
 end
 ";
         }

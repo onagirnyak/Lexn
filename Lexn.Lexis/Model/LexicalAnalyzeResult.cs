@@ -116,6 +116,7 @@ namespace Lexn.Lexis.Model
                 case "if":
                 case "then":
                 case "writeln":
+                case "readln":
                     return 0;
                 case ")":
                 case "else":
